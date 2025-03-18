@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateVideoDto {
   @IsNotEmpty()
@@ -7,10 +7,6 @@ export class CreateVideoDto {
 
   @IsString()
   description: string;
-  @IsNumber()
-  modified_time: number;
-  @IsNumber()
-  published_time: number;
   @IsString()
   thumbnail_id: string;
   @IsArray()

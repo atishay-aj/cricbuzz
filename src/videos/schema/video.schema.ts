@@ -9,10 +9,6 @@ export class Video {
   @Prop()
   description: string;
   @Prop()
-  modified_time: number;
-  @Prop({ required: true })
-  published_time: number;
-  @Prop()
   thumbnail_id: string;
 
   @Prop({ type: [String], default: [] })

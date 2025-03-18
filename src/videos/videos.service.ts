@@ -24,7 +24,7 @@ export class VideosService {
     const skip = (page - 1) * limit;
     const videos = await this.videoModel
       .find()
-      .sort({ published_time: -1 })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
       .exec();
