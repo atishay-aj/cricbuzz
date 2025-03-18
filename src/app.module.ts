@@ -10,7 +10,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     MongooseModule.forRoot('mongodb://localhost/cricbuzz'),
     CacheModule.register({
       isGlobal: true,
-    }),
+    }), //This setup initializes in-memory caching with default settings, allowing start caching data immediately, we can also use redis etc.
     VideosModule,
   ],
   controllers: [AppController],
