@@ -6,16 +6,16 @@ import { Video, VideoDocument } from './schema/video.schema';
 import { Model } from 'mongoose';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class VideosService {
   constructor(
     @InjectModel(Video.name) private readonly videoModel: Model<VideoDocument>,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private readonly configService: ConfigService,
   ) {}
   create(createVideoDto: CreateVideoDto) {
-    const published_time = Date.now();
-    createVideoDto.published_time = published_time;
     const createdVideo = new this.videoModel(createVideoDto);
     return createdVideo.save();
   }
@@ -62,7 +62,8 @@ export class VideosService {
       };
     });
     console.log('Setting suggestions in cache');
-    await this.cacheManager.set(cacheKey, suggestionsObj, 10000); // 10 seconds
+    const ttl = this.configService.get<number>('CACHE_TTL');
+    await this.cacheManager.set(cacheKey, suggestionsObj, ttl);
     return suggestionsObj;
   }
 }
